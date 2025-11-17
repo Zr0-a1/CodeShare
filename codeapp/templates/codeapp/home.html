@@ -1,0 +1,62 @@
+{% extends "codeapp/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>Discover & Share Code Snippets</h1>
+    <p>Your platform to upload, explore, and share code with everyone.</p>
+
+    {% if not user.is_authenticated %}
+    <a href="{% url 'login' %}" class="hero-btn">Get Started →</a>
+    {% endif %}
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+    <h2>Why Choose CodeShare?</h2>
+
+    <div class="feature-grid">
+        <div class="feature-card">Simple Upload System</div>
+        <div class="feature-card">Instant Sharing</div>
+        <div class="feature-card">Download for Members</div>
+        <div class="feature-card">Filter by Language</div>
+    </div>
+</section>
+
+<!-- SNIPPETS -->
+<section class="snippets">
+    <h2>Latest Code Snippets</h2>
+
+    <form method="GET" class="search-box">
+        <input type="text" name="q" placeholder="Search snippets..." value="{{ q }}">
+        <select name="language">
+            <option value="">All languages</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="javascript">JavaScript</option>
+            <option value="html">HTML</option>
+        </select>
+        <button>Search</button>
+    </form>
+
+    <div class="snippet-grid">
+        {% for s in snippets %}
+        <div class="snippet-card">
+            <h3>{{ s.title }}</h3>
+            <p class="lang">{{ s.language }}</p>
+            <a href="{% url 'detail' s.pk %}" class="btn">View Details</a>
+        </div>
+        {% empty %}
+        <p>No snippets found.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

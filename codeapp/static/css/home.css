@@ -1,0 +1,67 @@
+/* ------------------------------
+   HERO SECTION
+------------------------------ */
+.hero {
+    text-align: center;
+    padding: 110px 20px 60px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    font-size: 16px;
+    opacity: .7;
+    max-width: 650px;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+/* ------------------------------
+   CALL TO ACTION BUTTON
+------------------------------ */
+.hero .cta-login {
+    margin-top: 20px;
+}
+
+/* ------------------------------
+   PROJECT CARD GRID
+------------------------------ */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.project-card {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+}
+
+.project-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.project-card .content {
+    padding: 18px 22px;
+}
+
+.project-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+}

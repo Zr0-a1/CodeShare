@@ -1,0 +1,13 @@
+{% extends 'codeapp/base.html' %}
+{% block content %}
+
+<h2>Report Code Issue</h2>
+
+<form method="POST" class="form-box">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="submit-btn">Submit Report</button>
+</form>
+
+{% endblock %}

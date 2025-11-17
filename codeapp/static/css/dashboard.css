@@ -1,0 +1,62 @@
+/* ------------------------------
+   DASHBOARD HEADER
+------------------------------ */
+.dashboard-container {
+    margin-top: 40px;
+}
+
+.dashboard-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* ------------------------------
+   STATS GRID
+------------------------------ */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stat-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: 0.3s;
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
+}
+
+.stat-box h2 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.stat-box p {
+    opacity: .6;
+    font-size: 14px;
+}
+
+/* ------------------------------
+   RECENT UPLOADS
+------------------------------ */
+.dashboard-list .dash-item {
+    background: #fff;
+    padding: 16px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 15px;
+}
+
+.dashboard-list .dash-link {
+    text-decoration: none;
+    color: var(--accent);
+    font-weight: 600;
+}

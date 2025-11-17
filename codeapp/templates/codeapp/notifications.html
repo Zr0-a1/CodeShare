@@ -1,0 +1,16 @@
+{% extends 'codeapp/base.html' %}
+{% block content %}
+
+<h2>Notifications</h2>
+
+{% if notifications %}
+    {% for note in notifications %}
+        <div class="notification-box">
+            <p>{{ note.message }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No notifications.</p>
+{% endif %}
+
+{% endblock %}

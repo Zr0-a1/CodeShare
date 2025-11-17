@@ -1,0 +1,38 @@
+{% extends 'codeapp/base.html' %}
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+
+<div class="admin-grid">
+    <div class="admin-card">
+        <h3>Total Users</h3>
+        <p>{{ user_count }}</p>
+    </div>
+
+    <div class="admin-card">
+        <h3>Total Code Snippets</h3>
+        <p>{{ snippet_count }}</p>
+    </div>
+
+    <div class="admin-card">
+        <h3>Total Reports</h3>
+        <p>{{report_count}}</p>
+    </div>
+</div>
+
+<h3>Reported Code</h3>
+<div class="report-list">
+    {% for r in reports %}
+        <div class="report-card">
+            <strong>Snippet:</strong> {{ r.snippet.title }} <br>
+            <strong>Reason:</strong> {{ r.reason }} <br>
+
+            <a href="/snippet/{{ r.snippet.id }}">View Snippet</a>
+            <a href="/admin/delete/{{ r.snippet.id }}" class="delete-btn">Delete Snippet</a>
+        </div>
+    {% empty %}
+        <p>No reports yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

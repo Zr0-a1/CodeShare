@@ -1,0 +1,13 @@
+{% extends 'codeapp/base.html' %}
+{% block content %}
+
+<h2>Upload Code Snippet</h2>
+
+<form method="POST" enctype="multipart/form-data" class="form-box">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="submit-btn">Upload</button>
+</form>
+
+{% endblock %}

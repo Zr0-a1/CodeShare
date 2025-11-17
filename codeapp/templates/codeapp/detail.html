@@ -1,0 +1,25 @@
+{% extends 'codeapp/base.html' %}
+{% block content %}
+
+<h2>{{ snippet.title }}</h2>
+<p><strong>Language:</strong> {{ snippet.language }}</p>
+<p><strong>Description:</strong> {{ snippet.description }}</p>
+<p><strong>Uploaded by:</strong> {{ snippet.author.username }}</p>
+
+<div class="code-box">
+    <pre><code id="codeDisplay">{{ snippet.code }}</code></pre>
+</div>
+
+{% if user.is_authenticated %}
+    <button onclick="copyCode()" class="copy-btn">Copy Code</button>
+    <a href="/download/{{ snippet.id }}/" class="download-btn">Download</a>
+{% else %}
+    <p class="auth-warning">Login to download or copy the code.</p>
+{% endif %}
+
+<hr>
+
+<h3>Report this Code</h3>
+<a class="report-btn" href="/report/{{ snippet.id }}/">Report Issue</a>
+
+{% endblock %}

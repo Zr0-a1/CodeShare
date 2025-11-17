@@ -1,0 +1,70 @@
+/* ------------------------------
+   SNIPPET TITLE
+------------------------------ */
+.snippet-header {
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+
+.snippet-header .meta {
+    font-size: 14px;
+    opacity: .6;
+}
+
+/* ------------------------------
+   CODE BLOCK
+------------------------------ */
+.code-wrapper {
+    display: flex;
+    background: #1e1e1e;
+    color: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.line-numbers {
+    background: #111;
+    padding: 14px 10px;
+    text-align: right;
+    user-select: none;
+}
+
+.line-numbers span {
+    display: block;
+    padding: 2px 4px;
+    opacity: .5;
+}
+
+.code-content {
+    padding: 14px 18px;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    width: 100%;
+}
+
+/* Syntax Colors */
+.kw  { color:#569CD6; } /* Keywords */
+.str { color:#CE9178; }
+.num { color:#B5CEA8; }
+.cmt { color:#6A9955; font-style:italic; }
+
+/* ------------------------------
+   COPY BUTTON
+------------------------------ */
+.copy-btn {
+    margin-top: 15px;
+    float: right;
+}
+
+/* ------------------------------
+   FILE PREVIEW
+------------------------------ */
+#file-viewer {
+    background: #fff;
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
