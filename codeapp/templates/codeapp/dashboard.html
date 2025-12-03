@@ -1,26 +1,66 @@
-{% extends 'codeapp/base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard - CodeShare{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="profile-wrapper">
+  <div class="profile-layout">
 
-<h2>Your Dashboard</h2>
+    <!-- Sidebar -->
+    <aside class="profile-sidebar">
+      <h3 class="sidebar-title">Settings</h3>
+      <ul class="sidebar-nav">
+        <li><a href="{% url 'user_profile' %}" class="sidebar-link">👤 Profile</a></li>
+        <li><a href="{% url 'edit_profile' %}" class="sidebar-link">📝 Edit Profile</a></li>
+        <li><a href="{% url 'change_password' %}" class="sidebar-link">🔑 Change Password</a></li>
+        <li><a href="{% url 'delete_account' %}" class="sidebar-link delete-link">🗑️ Delete Account</a></li>
+      </ul>
+    </aside>
 
-<div class="stats">
-    <div class="stat-card">
-        <h3>Total Projects</h3>
-        <p>{{ project_count }}</p>
-    </div>
-</div>
+    <!-- Main Card -->
+    <div class="profile-card">
+      <h2 class="profile-name">Dashboard Overview</h2>
 
-<h3>Your Uploaded Snippets</h3>
-<div class="snippet-list">
-    {% for snip in user_snippets %}
-        <div class="snippet">
-            <h3>{{ snip.title }}</h3>
-            <p>{{ snip.language }}</p>
-            <a href="/snippet/{{ snip.id }}" class="view-btn">View</a>
+      <!-- Stats -->
+      <div class="profile-stats">
+        <div class="stat-card">
+          <h4>Total Snippets</h4>
+          <p>{{ snippets.count }}</p>
         </div>
-    {% empty %}
-        <p>No uploads yet.</p>
-    {% endfor %}
-</div>
+        <div class="stat-card">
+          <h4>Total Views</h4>
+          <p>{{ total_views }}</p>
+        </div>
+        <div class="stat-card">
+          <h4>Total Downloads</h4>
+          <p>{{ total_downloads }}</p>
+        </div>
+        <div class="stat-card">
+          <h4>Reported Snippets</h4>
+          <p>{{ reports.count }}</p>
+        </div>
+      </div>
 
+      <!-- Reports -->
+      <h3 class="profile-name">Recent Reports</h3>
+      {% if reports %}
+        <ul class="notif-list">
+          {% for report in reports %}
+            <li class="notif-item">
+              <span class="notif-message">Snippet '{{ report.snippet.title }}' reported by {{ report.reported_by.username }}</span>
+              <span class="notif-date">{{ report.created_at|date:"M d, Y H:i" }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="no-notif">No reports yet.</p>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
 {% endblock %}

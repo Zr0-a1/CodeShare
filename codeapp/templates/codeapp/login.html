@@ -1,19 +1,57 @@
-{% extends 'codeapp/base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login - CodeShare{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="auth-page">
 
-<h2>Login</h2>
+    <!-- Logo + Branding -->
+    <div class="auth-logo">
+        <img src="{% static 'images/logo.png' %}" alt="CodeShare">
+    </div>
 
-<form method="POST" class="form-box">
-    {% csrf_token %}
-    <label>Username</label>
-    <input type="text" name="username">
+    <!-- Main Login Card -->
+    <div class="auth-card">
 
-    <label>Password</label>
-    <input type="password" name="password">
+        <h2 class="auth-title">Welcome Back</h2>
 
-    <button type="submit" class="submit-btn">Login</button>
+        <!-- Login Form -->
+        <form method="POST" action="">
+            {% csrf_token %}
 
-    <p>Don't have an account? <a href="/register/">Register</a></p>
-</form>
+            <!-- Username -->
+            <label class="auth-label">Username</label>
+            <input type="text" name="username" placeholder="Enter your username" class="auth-input" required>
 
+            <!-- Password -->
+            <label class="auth-label">Password</label>
+            <input type="password" name="password" placeholder="••••••••" class="auth-input" required>
+
+            <div class="auth-extra">
+                <a href="#" class="auth-link">Forgot Password?</a>
+            </div>
+
+            <!-- Sign In Button -->
+            <button type="submit" class="auth-btn">Sign In</button>
+
+            <!-- Signup Link -->
+            <p class="auth-bottom-text">
+                Don't have an account?
+                <a href="{% url 'register' %}" class="auth-link-purple">Sign Up</a>
+            </p>
+
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="auth-footer">
+        <p>©copyright: CodeShare™... Built with Django</p>
+    </footer>
+
+</div>
 {% endblock %}

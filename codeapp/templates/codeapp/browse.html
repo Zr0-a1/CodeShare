@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Browse Snippets | CodeShare{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/browse.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4 browse-page">
+
+  <div class="row">
+
+    <!-- Sidebar Filters -->
+    <div class="col-lg-4 col-md-5 mb-4">
+      <div class="card filter-card sticky-sidebar">
+        <h5 class="text-purple fw-bold mb-3">Filters</h5>
+
+        <form method="get">
+
+          <!-- Search -->
+          <input type="text" name="search" class="form-control form-dark mb-3"
+                 placeholder="Search snippets..."
+                 value="{{ search_query|default_if_none:'' }}">
+
+          <!-- Language filter -->
+          <label class="form-label">Language</label>
+          <div class="mb-3">
+            {% for lang in languages %}
+              <div class="form-check d-flex align-items-center mb-2">
+                <input class="form-check-input me-2" type="checkbox" name="language"
+                       value="{{ lang }}" id="lang{{ forloop.counter }}"
+                       {% if lang in selected_languages %}checked{% endif %}>
+                <label class="form-check-label" for="lang{{ forloop.counter }}">{{ lang|title }}</label>
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- Sort -->
+          <label class="form-label">Sort By</label>
+          <select name="sort" class="form-select form-dark mb-3">
+            <option value="newest" {% if not sort_by or sort_by == 'newest' %}selected{% endif %}>Newest</option>
+            <option value="views" {% if sort_by == 'views' %}selected{% endif %}>Most Viewed</option>
+          </select>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-purple">Apply Filters</button>
+            <a href="{% url 'browse' %}" class="btn btn-outline-purple">Clear</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Snippet List -->
+    <div class="col-lg-8 col-md-7">
+      <div class="card browse-card">
+
+        <h3 class="fw-bold text-purple mb-3">Browse Snippets</h3>
+
+        <div class="row">
+
+          {% for snippet in snippets %}
+            <div class="col-md-6 mb-4">
+              <div class="card snippet-card h-100">
+                <div class="card-body d-flex flex-column">
+
+                  <h5 class="fw-bold mb-2">{{ snippet.title }}</h5>
+
+                  <p class="snippet-meta">
+                    By <span class="author">{{ snippet.author.username }}</span>
+                    · <span class="date">{{ snippet.created_at|date:"F j, Y" }}</span>
+                  </p>
+
+                  <div class="mb-2">
+                    <span class="badge">{{ snippet.language }}</span>
+                    <span class="badge badge-soft">{{ snippet.views }} views</span>
+                  </div>
+
+                  <p class="snippet-desc flex-grow-1">
+                    {{ snippet.description|truncatewords:20 }}
+                  </p>
+
+                  <a href="{% url 'detail' snippet.id %}" class="btn btn-outline-purple btn-sm mt-auto">
+                    View Snippet
+                  </a>
+
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <p class="text-muted">No snippets found.</p>
+          {% endfor %}
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-3 pagination">
+          {% for page_num in snippets.paginator.page_range %}
+            <a href="?page={{ page_num }}"
+               class="btn {% if snippets.number == page_num %}btn-purple{% else %}btn-outline-purple{% endif %} mx-1">
+              {{ page_num }}
+            </a>
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

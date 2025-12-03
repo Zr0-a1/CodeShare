@@ -1,0 +1,139 @@
+/* Wrapper */
+.upload-wrapper {
+    min-height: calc(100vh - 140px); /* keeps footer at bottom */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: #0b0b0b; /* page background for contrast */
+}
+
+/* Glass Card */
+.upload-glass-card {
+    width: 650px;
+    padding: 35px;
+    border-radius: 20px;
+    background: rgba(40, 40, 40, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.upload-glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
+
+/* Title */
+.upload-title {
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+    color: #a882ff;
+    margin-bottom: 10px;
+}
+.upload-title + p {
+    font-size: 0.95rem;
+    color: #bfbfbf;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.upload-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #dcdcdc;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Inputs */
+.upload-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #141414;
+    border: 1px solid #333;
+    color: #fafafa;
+    margin-bottom: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.upload-input:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 6px rgba(124,58,237,0.6);
+}
+select.upload-input, textarea.upload-input {
+    appearance: none;
+    resize: none;
+}
+
+/* Toggle Buttons */
+.upload-toggle-container {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+.toggle-btn {
+    flex: 1;
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: 1px solid #7c3aed;
+    background: none;
+    color: #7c3aed;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.toggle-btn:hover {
+    background: rgba(124,58,237,0.1);
+    box-shadow: 0 0 6px rgba(124,58,237,0.4);
+}
+.toggle-btn.active {
+    background: #7c3aed;
+    color: white !important;
+    box-shadow: 0 0 8px rgba(124,58,237,0.6);
+}
+
+/* ACE Editor */
+.editor-wrapper {
+    height: 260px;
+    background: #0d0d0d;
+    border-radius: 12px;
+    border: 1px solid #333;
+    overflow: hidden;
+}
+#aceEditor {
+    height: 100%;
+    width: 100%;
+}
+
+/* File Upload Box */
+.file-box {
+    padding-top: 5px;
+}
+
+/* Submit Button */
+.btn-submit {
+    width: 100%;
+    background: #7c3aed;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+.btn-submit:hover {
+    background: #6a2ce3;
+    box-shadow: 0 0 10px rgba(124,58,237,0.6);
+    transform: translateY(-1px);
+}
+.btn-submit:active {
+    transform: translateY(1px);
+}

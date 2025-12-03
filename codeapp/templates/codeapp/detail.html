@@ -1,25 +1,127 @@
-{% extends 'codeapp/base.html' %}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ snippet.title }} - CodeShare{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="container detail-page">
 
-<h2>{{ snippet.title }}</h2>
-<p><strong>Language:</strong> {{ snippet.language }}</p>
-<p><strong>Description:</strong> {{ snippet.description }}</p>
-<p><strong>Uploaded by:</strong> {{ snippet.author.username }}</p>
+  <!-- Flash Messages -->
+  {% if messages %}
+    <div class="alert-messages mb-3">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
 
-<div class="code-box">
-    <pre><code id="codeDisplay">{{ snippet.code }}</code></pre>
+  <div class="snippet-wrapper">
+
+    <!-- Top Section -->
+    <div class="snippet-header">
+      <h1 class="snippet-title">{{ snippet.title }}</h1>
+
+      <div class="snippet-info">
+        <span>By <span class="author">{{ snippet.author.username }}</span></span>
+        <span class="dot">•</span>
+        <span>{{ snippet.created_at|date:"F j, Y" }}</span>
+        <span class="dot">•</span>
+        <span class="badge badge-lang">{{ snippet.language }}</span>
+        <span class="dot">•</span>
+        <span>{{ snippet.views }} views</span>
+      </div>
+    </div>
+
+    <!-- Code Block -->
+    <div class="code-container">
+      <div id="readonly-editor" class="ace-readonly-editor"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      {% if user.is_authenticated %}
+        <a href="{% url 'download' snippet.id %}" class="btn btn-purple">Download</a>
+        <button id="copyBtn" class="btn btn-outline-purple">Copy Code</button>
+      {% else %}
+        <p class="text-muted">Login to download or report this snippet.</p>
+      {% endif %}
+    </div>
+
+    <!-- Report Section -->
+    {% if user.is_authenticated %}
+    <div class="report-section">
+      <h4 class="text-purple fw-bold mb-2">Report Snippet</h4>
+      <form method="post" action="{% url 'report_snippet' snippet.id %}">
+        {% csrf_token %}
+        {{ report_form.as_p }}
+        <button type="submit" class="btn btn-danger mt-2">Submit Report</button>
+      </form>
+    </div>
+    {% endif %}
+
+  </div>
+
 </div>
+{% endblock %}
 
-{% if user.is_authenticated %}
-    <button onclick="copyCode()" class="copy-btn">Copy Code</button>
-    <a href="/download/{{ snippet.id }}/" class="download-btn">Download</a>
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ace.js"></script>
+
+<!-- Hidden textarea storing code -->
+<textarea id="snippet-content" style="display:none;">
+{% if snippet.code %}
+{{ snippet.code|escape }}
+{% elif file_content %}
+{{ file_content|escape }}
 {% else %}
-    <p class="auth-warning">Login to download or copy the code.</p>
+No code available.
 {% endif %}
+</textarea>
 
-<hr>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const editor = ace.edit("readonly-editor");
+  editor.setTheme("ace/theme/monokai");
 
-<h3>Report this Code</h3>
-<a class="report-btn" href="/report/{{ snippet.id }}/">Report Issue</a>
+  // Language detection fallback
+  const modeMap = {
+    "python": "python",
+    "java": "java",
+    "cpp": "c_cpp",
+    "c": "c_cpp",
+    "javascript": "javascript",
+    "html": "html",
+    "css": "css",
+    "dart": "dart",
+    "text": "text"
+  };
 
+  const lang = "{{ snippet.language|lower }}";
+  editor.session.setMode("ace/mode/" + (modeMap[lang] || "text"));
+
+  // Load code
+  const codeContent = document.getElementById("snippet-content").value.trim();
+  editor.setValue(codeContent, -1);
+
+  editor.setOptions({
+    readOnly: true,
+    highlightActiveLine: false,
+    highlightGutterLine: false,
+    showPrintMargin: false,
+  });
+
+  // Hide cursor
+  editor.renderer.$cursorLayer.element.style.display = "none";
+
+  // Copy Button
+  document.getElementById("copyBtn")?.addEventListener("click", function () {
+    navigator.clipboard.writeText(codeContent);
+    this.textContent = "Copied!";
+    setTimeout(() => (this.textContent = "Copy Code"), 1500);
+  });
+});
+</script>
 {% endblock %}

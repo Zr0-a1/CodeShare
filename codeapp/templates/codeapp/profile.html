@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profile - CodeShare{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-wrapper">
+  <div class="profile-layout">
+
+    <!-- Sidebar -->
+    <aside class="profile-sidebar">
+      <h3 class="sidebar-title">Settings</h3>
+      <ul class="sidebar-nav">
+        <li><a href="{% url 'change_password' %}" class="sidebar-link">🔑 Change Password</a></li>
+        <li><a href="{% url 'edit_profile' %}" class="sidebar-link">📝 Edit Profile</a></li>
+        <li><a href="{% url 'user_dashboard' %}" class="sidebar-link">📊 Dashboard</a></li>
+        <li><a href="{% url 'delete_account' %}" class="sidebar-link delete-link">🗑️ Delete Account</a></li>
+      </ul>
+
+      <!-- My Snippets -->
+      <div class="sidebar-snippets">
+        <h3 class="sidebar-title">My Snippets</h3>
+        {% if snippets %}
+          <ul class="snippet-list">
+            {% for snippet in snippets %}
+              <li class="snippet-entry">
+                <div class="snippet-info">
+                  <span class="snippet-title">{{ snippet.title }}</span>
+                  <span class="snippet-lang">{{ snippet.language }}</span>
+                </div>
+                <form method="POST" action="{% url 'delete_snippet' snippet.id %}" class="delete-form">
+                  {% csrf_token %}
+                  <button type="submit" class="delete-btn">🗑️</button>
+                </form>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="no-snippets">No snippets uploaded yet.</p>
+        {% endif %}
+      </div>
+    </aside>
+
+    <!-- Main Profile Card -->
+    <div class="profile-card">
+
+      <!-- Header -->
+      <div class="profile-header">
+        <div class="avatar-icon">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="profile-info">
+          <h2 class="profile-name">{{ user.username }}</h2>
+          <p class="profile-email">{{ user.email }}</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="profile-stats">
+        <div class="stat-card">
+          <h4>Snippets Uploaded</h4>
+          <p>{{ stats.snippet_count }}</p>
+        </div>
+        <div class="stat-card">
+          <h4>Total Downloads</h4>
+          <p>{{ stats.total_downloads }}</p>
+        </div>
+        <div class="stat-card">
+          <h4>Followers</h4>
+          <p>{{ follower_count }}</p>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="profile-notifications">
+        <div class="notif-header">
+          <h3>Notifications</h3>
+          {% if unread_count > 0 %}
+            <form method="POST" action="{% url 'mark_all_read' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn-mark-read">Mark All as Read</button>
+            </form>
+          {% endif %}
+        </div>
+
+        {% if notifications %}
+          <div class="notif-scroll">
+            <ul class="notif-list">
+              {% for note in notifications %}
+                <li class="notif-item {% if not note.is_read %}unread{% endif %}">
+                  <span class="notif-message">{{ note.message }}</span>
+                  <span class="notif-date">{{ note.created_at|date:"M d, Y H:i" }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          <p class="no-notif">You have no notifications.</p>
+        {% endif %}
+      </div>
+
+      <!-- Recent Snippets -->
+      <div class="profile-activity">
+        <h3>Recent Snippets</h3>
+        {% if recent_snippets %}
+          <div class="snippet-grid">
+            {% for snippet in recent_snippets %}
+              <div class="snippet-card">
+                <h5>{{ snippet.title }}</h5>
+                <p class="snippet-meta">{{ snippet.language }} • {{ snippet.created_at|date:"M d, Y" }}</p>
+                <a href="{% url 'detail' snippet.id %}" class="snippet-link">View Snippet</a>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="no-snippets">You haven’t uploaded any snippets yet.</p>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

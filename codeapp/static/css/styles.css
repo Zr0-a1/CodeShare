@@ -1,0 +1,265 @@
+/* ===============================
+   GLOBAL RESET + BASE THEME
+   =============================== */
+
+body {
+  background-color: #0d0d0d;
+  color: #e5e5e5;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Purple buttons globally */
+.btn,
+button,
+input[type="submit"] {
+  background-color: #7c3aed !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: 8px !important;
+  transition: 0.2s ease;
+}
+
+.btn:hover,
+button:hover {
+  background-color: #6d28d9 !important;
+  transform: translateY(-1px);
+}
+
+/* Outline purple button */
+.btn-outline-purple {
+  background: none !important;
+  border: 1px solid #7c3aed !important;
+  color: #7c3aed !important;
+}
+
+.btn-outline-purple:hover {
+  background-color: #7c3aed !important;
+  color: white !important;
+}
+
+
+
+/* ===============================
+      HEADER / NAVIGATION
+   =============================== */
+
+.header {
+  background-color: #0d0d0d;
+  border-bottom: 1px solid #7c3aed;
+  padding: 14px 0;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo-icon {
+  color: #7c3aed;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: #dcdcdc;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: 0.25s ease;
+}
+
+.nav-links a:hover {
+  background-color: rgba(124, 58, 237, 0.25);
+  color: white;
+}
+
+/* Share Code button */
+.share-code {
+  background-color: #7c3aed !important;
+  color: white !important;
+  padding: 8px 16px;
+}
+
+
+
+/* ===============================
+      NOTIFICATION DROPDOWN
+   =============================== */
+
+.notif-btn {
+  background: none;
+  border: none;
+  color: #eaeaea;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.notif-btn:hover {
+  background-color: rgba(124, 58, 237, 0.25);
+}
+
+.notif-badge {
+  background-color: #7c3aed;
+  color: white;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* Dropdown box */
+.notification-dropdown {
+  position: absolute;
+  right: 8px;
+  top: 55px;
+  width: 260px;
+  background-color: #141414;
+  border: 1px solid #2d2d2d;
+  padding: 14px;
+  border-radius: 12px;
+  display: none;
+  z-index: 200;
+}
+
+.notification-dropdown.show {
+  display: block;
+}
+
+.notification-dropdown h4 {
+  font-size: 1.1rem;
+  color: #7c3aed;
+  margin-bottom: 10px;
+}
+
+.notification-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-dropdown li {
+  color: #d1d5db;
+  border-bottom: 1px solid #2d2d2d;
+  padding: 8px 2px;
+}
+
+.no-notif {
+  color: #9ca3af;
+}
+
+
+
+/* ===============================
+          MOBILE MENU
+   =============================== */
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  color: white;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background-color: #121212;
+  border-top: 1px solid #7c3aed;
+  padding: 14px;
+}
+
+.mobile-menu.show {
+  display: flex;
+}
+
+.mobile-menu a {
+  padding: 12px 0;
+  border-radius: 6px;
+}
+
+.mobile-menu a:hover {
+  background-color: rgba(124, 58, 237, 0.25);
+}
+
+/* Mobile logout */
+.mobile-logout {
+  border: 1px solid #dc2626 !important;
+  color: #dc2626 !important;
+  background: none !important;
+  border-radius: 6px !important;
+  padding: 10px;
+}
+
+.mobile-logout:hover {
+  background-color: #dc2626 !important;
+  color: white !important;
+}
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+}
+
+
+
+/* ===============================
+             FOOTER
+   =============================== */
+
+.footer {
+  background-color: #0f0f0f;
+  padding: 30px 0;
+  border-top: 1px solid #2d2d2d;
+  margin-top: 60px;
+}
+
+.footer-content {
+  text-align: center;
+  color: #b9b9b9;
+}
+
+.footer-logo {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  margin: 0 10px;
+  color: #d6d6d6;
+}
+
+.footer-links a:hover {
+  color: #7c3aed;
+}
+
+.footer-copy {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #7a7a7a;
+}

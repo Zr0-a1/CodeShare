@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Profile - CodeShare{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-wrapper">
+  <div class="profile-layout">
+
+    <!-- Sidebar -->
+    <aside class="profile-sidebar">
+      <h3 class="sidebar-title">Settings</h3>
+      <ul class="sidebar-nav">
+        <li><a href="{% url 'user_profile' %}" class="sidebar-link">👤 Profile</a></li>
+        <li><a href="{% url 'change_password' %}" class="sidebar-link">🔑 Change Password</a></li>
+        <li><a href="{% url 'user_dashboard' %}" class="sidebar-link">📊 Dashboard</a></li>
+        <li><a href="{% url 'delete_account' %}" class="sidebar-link delete-link">🗑️ Delete Account</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Card -->
+    <div class="profile-card">
+      <h2 class="profile-name">Edit Profile</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-mark-read">Save Changes</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

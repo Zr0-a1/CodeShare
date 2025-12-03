@@ -1,13 +1,122 @@
-{% extends 'codeapp/base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/upload.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="upload-wrapper">
+    <div class="upload-glass-card">
 
-<h2>Upload Code Snippet</h2>
+        <!-- Page Title -->
+        <h2 class="upload-title">Upload Your Code Snippet</h2>
+        <p class="text-muted text-center mb-4">
+            Share your snippet by pasting code or uploading a file. Choose your preferred method below.
+        </p>
 
-<form method="POST" enctype="multipart/form-data" class="form-box">
-    {% csrf_token %}
-    {{ form.as_p }}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-    <button type="submit" class="submit-btn">Upload</button>
-</form>
+            <!-- Title -->
+            <div class="upload-section">
+                <label class="upload-label">Snippet Title</label>
+                <input type="text" name="title" class="upload-input" placeholder="Enter title..." required>
+            </div>
 
+            <!-- Language -->
+            <div class="upload-section">
+                <label class="upload-label">Language</label>
+                <select name="language" class="upload-input" id="languageSelect">
+                    <option value="python">Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                    <option value="c">C</option>
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                </select>
+            </div>
+
+            <!-- Toggle Buttons -->
+            <div class="upload-toggle-container">
+                <button type="button" id="btnPaste" class="toggle-btn active">Paste Code</button>
+                <button type="button" id="btnFile" class="toggle-btn">Upload File</button>
+            </div>
+
+            <!-- Paste Code (ACE Editor) -->
+            <div id="editorBox" class="editor-wrapper">
+                <div id="aceEditor"></div>
+                <textarea id="codeTextarea" name="code" hidden></textarea>
+            </div>
+
+            <!-- File Upload -->
+            <div id="fileBox" class="file-box" style="display:none;">
+                <label class="upload-label">Select File</label>
+                <input type="file" name="file" class="upload-input">
+            </div>
+
+            <!-- Description -->
+            <div class="upload-section">
+                <label class="upload-label">Description</label>
+                <textarea name="description" class="upload-input" rows="3" placeholder="Short description..."></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button class="btn-submit mt-4" type="submit">Upload Snippet</button>
+        </form>
+    </div>
+</div>
+
+<!-- ACE Editor -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ace.js"></script>
+<script>
+    // Initialize ACE
+    let editor = ace.edit("aceEditor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/python");
+
+    const btnPaste = document.getElementById("btnPaste");
+    const btnFile = document.getElementById("btnFile");
+    const editorBox = document.getElementById("editorBox");
+    const fileBox = document.getElementById("fileBox");
+
+    // Submit logic
+    document.querySelector("form").addEventListener("submit", () => {
+        if (editorBox.style.display === "block") {
+            document.getElementById("codeTextarea").value = editor.getValue();
+        } else {
+            document.getElementById("codeTextarea").value = "";
+        }
+    });
+
+    // Language change
+    document.getElementById("languageSelect").addEventListener("change", function () {
+        const modes = {
+            python: "python",
+            javascript: "javascript",
+            java: "java",
+            cpp: "c_cpp",
+            c: "c_cpp",
+            html: "html",
+            css: "css"
+        };
+        editor.session.setMode("ace/mode/" + modes[this.value]);
+    });
+
+    // Toggle logic
+    btnPaste.addEventListener("click", () => {
+        btnPaste.classList.add("active");
+        btnFile.classList.remove("active");
+        editorBox.style.display = "block";
+        fileBox.style.display = "none";
+    });
+
+    btnFile.addEventListener("click", () => {
+        btnFile.classList.add("active");
+        btnPaste.classList.remove("active");
+        editorBox.style.display = "none";
+        fileBox.style.display = "block";
+    });
+</script>
 {% endblock %}

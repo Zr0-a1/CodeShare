@@ -1,70 +1,186 @@
-/* ------------------------------
-   SNIPPET TITLE
------------------------------- */
+/* ===========================
+   Detail Page Layout
+   =========================== */
+
+.detail-page {
+  padding-top: 30px;
+  padding-bottom: 50px;
+  color: #f3f4f6;
+}
+
+/* Wrapper around all detail content */
+.snippet-wrapper {
+  background-color: #121212;
+  border: 1px solid #2d2d2d;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  max-width: 950px;
+  margin: auto;
+}
+
+/* ===========================
+   Header Section
+   =========================== */
+
 .snippet-header {
-    margin-top: 40px;
-    margin-bottom: 25px;
+  text-align: center;
+  margin-bottom: 1.6rem;
 }
 
-.snippet-header .meta {
-    font-size: 14px;
-    opacity: .6;
+.snippet-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin-bottom: 0.4rem;
 }
 
-/* ------------------------------
-   CODE BLOCK
------------------------------- */
-.code-wrapper {
-    display: flex;
-    background: #1e1e1e;
-    color: #fff;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    margin-top: 20px;
+.snippet-info {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.line-numbers {
-    background: #111;
-    padding: 14px 10px;
-    text-align: right;
-    user-select: none;
+.snippet-info .author {
+  color: #7c3aed;
+  font-weight: 600;
 }
 
-.line-numbers span {
-    display: block;
-    padding: 2px 4px;
-    opacity: .5;
+/* Dot separator */
+.snippet-info .dot {
+  color: #6b7280;
 }
 
-.code-content {
-    padding: 14px 18px;
-    white-space: pre-wrap;
-    overflow-x: auto;
-    width: 100%;
+/* Language badge */
+.badge-lang {
+  background-color: #7c3aed;
+  padding: 4px 10px;
+  border-radius: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
 }
 
-/* Syntax Colors */
-.kw  { color:#569CD6; } /* Keywords */
-.str { color:#CE9178; }
-.num { color:#B5CEA8; }
-.cmt { color:#6A9955; font-style:italic; }
+/* ===========================
+   Code Viewer
+   =========================== */
 
-/* ------------------------------
-   COPY BUTTON
------------------------------- */
-.copy-btn {
-    margin-top: 15px;
-    float: right;
+.code-container {
+  border: 1px solid #2d2d2d;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: #0e0e0e;
+  margin-bottom: 1.8rem;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
 }
 
-/* ------------------------------
-   FILE PREVIEW
------------------------------- */
-#file-viewer {
-    background: #fff;
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+.ace-readonly-editor {
+  height: 420px;
+  font-size: 1rem;
+}
+
+/* ===========================
+   Actions (Download / Copy)
+   =========================== */
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+/* Purple Button */
+.btn-purple {
+  background-color: #7c3aed;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 0.55rem;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-purple:hover {
+  background-color: #692dd6;
+  transform: translateY(-2px);
+}
+
+/* Outline Purple */
+.btn-outline-purple {
+  border: 1px solid #7c3aed;
+  padding: 0.55rem 1.2rem;
+  color: #c084fc;
+  background-color: transparent;
+  border-radius: 0.55rem;
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+.btn-outline-purple:hover {
+  background-color: #6d28d9;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   Report Section
+   =========================== */
+
+.report-section {
+  border-top: 1px solid #2d2d2d;
+  padding-top: 1.8rem;
+  margin-top: 1.8rem;
+}
+
+.report-section h4 {
+  margin-bottom: 0.8rem;
+}
+
+/* Textarea */
+.report-section textarea {
+  background-color: #1a1a1a;
+  color: #e5e7eb;
+  border: 1px solid #323232;
+  border-radius: 0.6rem;
+  padding: 0.85rem;
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  transition: 0.3s ease;
+}
+
+.report-section textarea:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.30);
+  outline: none;
+}
+
+/* Report Button */
+.report-section .btn-danger {
+  padding: 0.5rem 1.3rem;
+  border-radius: 0.55rem;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.report-section .btn-danger:hover {
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   Mobile Responsive
+   =========================== */
+
+@media (max-width: 768px) {
+  .snippet-wrapper {
+    padding: 1.4rem;
+  }
+
+  .snippet-title {
+    font-size: 1.6rem;
+  }
 }
