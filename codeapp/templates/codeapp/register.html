@@ -4,58 +4,56 @@
 {% block title %}Sign Up - CodeShare{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="auth-page">
 
-    <!-- Logo + Branding -->
     <div class="auth-logo">
         <img src="{% static 'images/logo.png' %}" alt="CodeShare">
     </div>
 
-    <!-- Main Register Card -->
     <div class="auth-card">
-
         <h2 class="auth-title">Create Your CodeShare Account</h2>
 
-        <!-- Register Form -->
+        <!-- ✅ Show form errors -->
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+            {% for field in form %}
+              {% for error in field.errors %}
+                <p>{{ field.label }}: {{ error }}</p>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
         <form method="POST" action="{% url 'register' %}">
             {% csrf_token %}
-
-            <!-- Username -->
             <label class="auth-label">Username</label>
             <input type="text" name="username" placeholder="Choose a username" class="auth-input" required>
 
-            <!-- Email -->
             <label class="auth-label">Email Address</label>
             <input type="email" name="email" placeholder="name@example.com" class="auth-input" required>
 
-            <!-- Password -->
             <label class="auth-label">Password</label>
             <input type="password" name="password" placeholder="Enter password" class="auth-input" required>
 
-            <!-- Confirm Password -->
             <label class="auth-label">Confirm Password</label>
             <input type="password" name="confirm_password" placeholder="Re-enter password" class="auth-input" required>
 
-            <!-- Sign Up Button -->
             <button type="submit" class="auth-btn">Sign Up</button>
 
-            <!-- Login Link -->
             <p class="auth-bottom-text">
                 Already have an account?
                 <a href="{% url 'login' %}" class="auth-link-purple">Sign In</a>
             </p>
-
         </form>
     </div>
 
-    <!-- Footer -->
     <footer class="auth-footer">
         <p>©copyright: CodeShare™... Built with Django</p>
     </footer>
-
 </div>
 {% endblock %}

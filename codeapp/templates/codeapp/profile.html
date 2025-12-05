@@ -58,50 +58,34 @@
           <p class="profile-email">{{ user.email }}</p>
         </div>
       </div>
+<!-- Notifications -->
+<div id="notifications" class="profile-notifications">
+  <div class="notif-header">
+    <h3>Notifications</h3>
+    {% if unread_count > 0 %}
+      <form method="POST" action="{% url 'mark_all_read' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn-mark-read">Mark All as Read</button>
+      </form>
+    {% endif %}
+  </div>
 
-      <!-- Stats -->
-      <div class="profile-stats">
-        <div class="stat-card">
-          <h4>Snippets Uploaded</h4>
-          <p>{{ stats.snippet_count }}</p>
-        </div>
-        <div class="stat-card">
-          <h4>Total Downloads</h4>
-          <p>{{ stats.total_downloads }}</p>
-        </div>
-        <div class="stat-card">
-          <h4>Followers</h4>
-          <p>{{ follower_count }}</p>
-        </div>
-      </div>
+  {% if notifications %}
+    <div class="notif-scroll">
+      <ul class="notif-list">
+        {% for note in notifications %}
+          <li class="notif-item {% if not note.is_read %}unread{% endif %}">
+            <span class="notif-message">{{ note.message }}</span>
+            <span class="notif-date">{{ note.created_at|date:"M d, Y H:i" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <p class="no-notif">You have no notifications.</p>
+  {% endif %}
+</div>
 
-      <!-- Notifications -->
-      <div class="profile-notifications">
-        <div class="notif-header">
-          <h3>Notifications</h3>
-          {% if unread_count > 0 %}
-            <form method="POST" action="{% url 'mark_all_read' %}">
-              {% csrf_token %}
-              <button type="submit" class="btn-mark-read">Mark All as Read</button>
-            </form>
-          {% endif %}
-        </div>
-
-        {% if notifications %}
-          <div class="notif-scroll">
-            <ul class="notif-list">
-              {% for note in notifications %}
-                <li class="notif-item {% if not note.is_read %}unread{% endif %}">
-                  <span class="notif-message">{{ note.message }}</span>
-                  <span class="notif-date">{{ note.created_at|date:"M d, Y H:i" }}</span>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
-        {% else %}
-          <p class="no-notif">You have no notifications.</p>
-        {% endif %}
-      </div>
 
       <!-- Recent Snippets -->
       <div class="profile-activity">

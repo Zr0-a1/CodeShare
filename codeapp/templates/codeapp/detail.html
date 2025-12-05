@@ -56,6 +56,16 @@
       <h4 class="text-purple fw-bold mb-2">Report Snippet</h4>
       <form method="post" action="{% url 'report_snippet' snippet.id %}">
         {% csrf_token %}
+        {% if report_form.errors %}
+          <div class="alert alert-danger">
+            {{ report_form.non_field_errors }}
+            {% for field in report_form %}
+              {% for error in field.errors %}
+                <p>{{ field.label }}: {{ error }}</p>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        {% endif %}
         {{ report_form.as_p }}
         <button type="submit" class="btn btn-danger mt-2">Submit Report</button>
       </form>
@@ -86,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const editor = ace.edit("readonly-editor");
   editor.setTheme("ace/theme/monokai");
 
-  // Language detection fallback
   const modeMap = {
     "python": "python",
     "java": "java",
@@ -102,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const lang = "{{ snippet.language|lower }}";
   editor.session.setMode("ace/mode/" + (modeMap[lang] || "text"));
 
-  // Load code
   const codeContent = document.getElementById("snippet-content").value.trim();
   editor.setValue(codeContent, -1);
 
@@ -113,10 +121,8 @@ document.addEventListener("DOMContentLoaded", function () {
     showPrintMargin: false,
   });
 
-  // Hide cursor
   editor.renderer.$cursorLayer.element.style.display = "none";
 
-  // Copy Button
   document.getElementById("copyBtn")?.addEventListener("click", function () {
     navigator.clipboard.writeText(codeContent);
     this.textContent = "Copied!";

@@ -26,7 +26,21 @@ class CodeSnippetAdmin(admin.ModelAdmin):
     restore_snippet.short_description = "Restore selected snippets"
 
 
-admin.site.register(Report)
-admin.site.register(Notification)
-admin.site.register(UserStats)
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ('snippet', 'reported_by', 'reason', 'resolved', 'created_at')
+    list_filter = ('resolved', 'created_at')
+    search_fields = ('snippet__title', 'reported_by__username', 'reason')
 
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'message', 'is_read', 'created_at')
+    list_filter = ('is_read', 'created_at')
+    search_fields = ('user__username', 'message')
+
+
+@admin.register(UserStats)
+class UserStatsAdmin(admin.ModelAdmin):
+    list_display = ('user', 'deleted_count')
+    search_fields = ('user__username',)

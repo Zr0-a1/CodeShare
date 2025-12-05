@@ -4,7 +4,6 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .models import CodeSnippet, Report
 
 
-
 # ------------------------- REGISTER FORM -------------------------
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(
@@ -53,7 +52,7 @@ class RegisterForm(forms.ModelForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "email", "first_name", "last_name"]  # ✅ no password
+        fields = ["username", "email", "first_name", "last_name"]
         widgets = {
             "username": forms.TextInput(attrs={"class": "form-control", "placeholder": "Username"}),
             "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "Email"}),
@@ -64,6 +63,7 @@ class EditProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["username"].help_text = None 
+
 
 # ------------------------- PASSWORD CHANGE FORM -------------------------
 class DashboardPasswordChangeForm(PasswordChangeForm):
@@ -97,15 +97,15 @@ class CodeSnippetForm(forms.ModelForm):
             "file": forms.ClearableFileInput(attrs={"class": "form-control form-dark"}),
         }
 
+
 # ------------------------- REPORT FORM -------------------------
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ["reason"]   
+        fields = ["reason"]   # ✅ expose reason field for user input
         widgets = {
             "reason": forms.Textarea(attrs={
                 "rows": 3,
                 "placeholder": "Describe the issue..."
             })
         }
-
